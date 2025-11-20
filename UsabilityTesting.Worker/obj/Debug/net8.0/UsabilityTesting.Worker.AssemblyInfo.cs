@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UsabilityTesting.Worker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7aaee289a1350877072885a1ad01d1112e58a659")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+38aac1e45b0a68136602eea7c107f9097fffd6b3")]
 [assembly: System.Reflection.AssemblyProductAttribute("UsabilityTesting.Worker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UsabilityTesting.Worker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
