@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usability-monitor-config
+data:
+  appsettings.json: |
+    {
+      "Logging": {
+        "LogLevel": {
+          "Default": "Information",
+          "Microsoft.Hosting.Lifetime": "Information"
+        }
+      },
+      "MonitorSettings": {
+        "ExcelFilePath": "/app/config/targets.xlsx",
+        "CheckIntervalSeconds": 60,
+        "RetryCount": 3,
+        "RetryDelayMilliseconds": 2000
+      },
+      "SmtpSettings": {
+        "Host": "smtp.gmail.com",
+        "Port": 587,
+        "EnableSsl": true,
+        "UserName": "your-email@gmail.com",
+        "Password": "your-app-password",
+        "FromEmail": "your-email@gmail.com",
+        "DisplayName": "AKS Monitor"
+      }
+    }
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usability-monitor
+  labels:
+    app: usability-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usability-monitor
+  template:
+    metadata:
+      labels:
+        app: usability-monitor
+    spec:
+      containers:
+      - name: usability-monitor
+        image: your-registry/usability-monitor:latest
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/appsettings.json
+          subPath: appsettings.json
+        - name: excel-volume
+          mountPath: /app/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: usability-monitor-config
+      - name: excel-volume
+        # You can use a PVC, Azure File, or ConfigMap (if file is small and base64 encoded)
+        # For simplicity here, assuming you might mount a secret or another ConfigMap containing the excel file
+        # Or you can just COPY it in the Dockerfile if it doesn't change often.
+        # Here is an example of using an emptyDir for testing, but in prod you'd want a persistent volume or Azure File Share
+        emptyDir: {} 
